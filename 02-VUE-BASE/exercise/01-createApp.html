@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>createApp & setup</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script src="./js/vue.js"></script>
-    <script></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>createApp & setup</title>
+</head>
+
+<body>
+  <div id="app">
+
+    <h1>{{text}}</h1>
+
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+    const App = {
+      setup() {
+        let text = "hello"
+
+        setTimeout(() => {
+          text = "hi" // 畫面沒改變,因為把變數跟vue綁定
+          console.log(text)
+          Ｆ
+        }, 1000)
+
+
+        return { text }
+      }
+    }
+
+    Vue.createApp(App).mount("#app")
+  </script>
+</body>
+
 </html>

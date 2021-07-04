@@ -1,22 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ref</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1></h1>
-    </div>
-    <script src="./js/vue.js"></script>
-    <script>
-      const App = {
-        setup() {
-          return {};
-        },
-      };
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ref</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{text}}</h1>
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+
+    // 解構
+    const { ref } = Vue
+
+    const App = {
+      setup() {
+        // 綁定: 透過Vue.ref方法
+        // 原本寫法:
+        // const text = Vue.ref("hello")
+
+        // 解構後可直接這樣寫
+        const text = ref("hello")
+
+        setTimeout(() => {
+          // 改變值用value
+          // Vue.ref會回傳一個物件,裡面有個value屬性
+          text.value = "hi"
+          console.log(text)
+        }, 1000)
+
+
+        return { text }
+      }
+    }
+
+    Vue.createApp(App).mount("#app")
+  </script>
+</body>
+
 </html>

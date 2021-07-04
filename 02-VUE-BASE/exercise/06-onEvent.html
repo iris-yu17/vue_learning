@@ -1,24 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>v-on:Event</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1></h1>
-      <button>Add</button>
-      <button>Remove</button>
-    </div>
-    <script src="./js/vue.js"></script>
-    <script>
-      const App = {
-        setup() {
-          return {};
-        },
-      };
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>v-on:Event</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- ref -->
+    <h1>{{num}}</h1>
+    <hr>
+    <!-- reactive -->
+    <h1>{{num2.number}}</h1>
+    <button v-on:click="addFn">Add</button>
+    <!-- @click是 v-on 的縮寫 -->
+    <button @click="deductFn">Remove</button>
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+    const { ref, reactive } = Vue
+    const App = {
+      setup() {
+        const num = ref(0)
+
+        const num2 = reactive({ number: 0 })
+
+        const addFn = () => {
+          num.value++
+          num2.number += 1
+        }
+
+        const deductFn = () => {
+          num.value -= 1
+          num2.number -= 1
+        }
+
+
+        // 在setup裡面想要讓html都讀取,操作得到,都要丟到return
+        return { num, num2, addFn, deductFn };
+      },
+    };
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
 </html>

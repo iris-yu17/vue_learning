@@ -1,37 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>readonly</title>
-    <style>
-      button {
-        color: red;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app">
-      <h1>{{Num.idx}}</h1>
-      <button @click="AddFn">Add</button>
-      <button @click="Test">Add copy</button>
-    </div>
-    <script src="./js/vue.js"></script>
-    <script>
-      const { reactive } = Vue;
-      const App = {
-        setup() {
-          const Num = reactive({ idx: 0 });
-          const AddFn = () => {
-            Num.idx++;
-          };
 
-          const Test = () => {};
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>readonly</title>
+  <style>
+    button {
+      color: red;
+    }
+  </style>
+</head>
 
-          return { Num, AddFn, Test };
-        },
-      };
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+<body>
+  <div id="app">
+    <h1>{{Num.idx}}</h1>
+    <button @click="AddFn">Add</button>
+    <button @click="Test">Add copy</button>
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+    // readonly: 防止資料被修改, 讓協作者可以拿到這個值, 但無法修改它
+    const { reactive, readonly } = Vue;
+    const App = {
+      setup() {
+        const Num = reactive({ idx: 0 });
+        const copyNum = readonly(Num)
+
+
+        const AddFn = () => {
+          Num.idx++;
+
+          console.log("Num:", Num)
+          console.log("copyNum:", copyNum)
+        };
+
+        const Test = () => {
+          copyNum.idx++
+        }
+
+        return { Num, AddFn, Test };
+      },
+    };
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
 </html>

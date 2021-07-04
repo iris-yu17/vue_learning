@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>reactive</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1></h1>
-    </div>
-    <script src="./js/vue.js"></script>
-    <script>
-      const App = {
-        setup() {
-          return {};
-        },
-      };
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reactive</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{text.name}}</h1>
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+    // note: reactive只接受物件或陣列值, ref可接受任何型別
+    const { reactive } = Vue
+
+    const App = {
+      setup() {
+        const text = reactive({ name: "ken" })
+        return { text };
+      },
+    };
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
 </html>

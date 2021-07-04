@@ -8,13 +8,15 @@
   <body>
     <div id="app">
       <ul>
-        <li v-for="(list, idx) in listArr" v-show="list.show">
+        <li v-for="(list, idx) in listArr" v-bind:key="list.name" v-show="list.show">
           {{idx + 1}}. {{list.name}}
         </li>
       </ul>
     </div>
     <script src="./js/vue.js"></script>
     <script>
+      // 綁定了key之後若有改變資料就不會全部重新渲染, 只會改變那條的值
+      // 因索引會隨位置改變, 所以不可以用索引當key!!!!!!
       const { reactive } = Vue;
       const App = {
         setup() {

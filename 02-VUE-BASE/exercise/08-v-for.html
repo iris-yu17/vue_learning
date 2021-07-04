@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>v-for</title>
-  </head>
-  <body>
-    <div id="app">
-      <ul>
-        <li></li>
-      </ul>
-    </div>
-    <script src="./js/vue.js"></script>
-    <script>
-      const { reactive } = Vue;
-      const App = {
-        setup() {
-          const listArr = reactive([
-            { name: "2020 Vue3 專業職人 | 入門篇", show: true },
-            { name: "2020 Vue3 專業職人 | 加值篇", show: false },
-            { name: "2020 Vue3 專業職人 | 進階篇", show: true },
-            { name: "現代 JavaScript 職人之路｜入門篇", show: true },
-            { name: "現代 JavaScript 職人之路｜中階實戰篇", show: false },
-          ]);
-          return {
-            listArr,
-          };
-        },
-      };
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>v-for</title>
+</head>
+
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(item, index) in listArr" v-show="item.display">
+        {{index+1}}: {{item.name}}
+      </li>
+    </ul>
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+    // 用vue跑迴圈產生dom元素
+    // 透過模板語法v-for
+    // v-show: vue的語法, 利用display:none||block來決定是否秀出, 裡面放布林值
+    const { reactive } = Vue;
+    const App = {
+      setup() {
+        const listArr = reactive([
+          { name: "2020 Vue3 專業職人 | 入門篇", display: true },
+          { name: "2020 Vue3 專業職人 | 加值篇", display: false },
+          { name: "2020 Vue3 專業職人 | 進階篇", display: true },
+          { name: "現代 JavaScript 職人之路｜入門篇", display: true },
+          { name: "現代 JavaScript 職人之路｜中階實戰篇", sdisplayow: false },
+        ]);
+        return {
+          listArr,
+        };
+      },
+    };
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
 </html>

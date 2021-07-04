@@ -7,12 +7,18 @@
   </head>
   <body>
     <div id="app">
-      <h1 id="vue-if">{{Text}}</h1>
-      <h1 id="vue-show">{{Text}}</h1>
+      <h1 id="vue-if" v-if="isShow">{{Text}}</h1>
+      <h1 id="vue-show" v-show="isShow">{{Text}}</h1>
       <button @click="handDomShow">Hand Dom Show</button>
     </div>
     <script src="./js/vue.js"></script>
     <script>
+      // 利用vue顯示跟隱藏dom元素
+      // v-show 利用display:none||block
+      // | 可用於頻繁切換的, 例如tab
+
+      // v-if 直接把dom從畫面刪除
+      // | 比較耗效能, 如果是權限控制之類的可用
       const { ref } = Vue;
       const App = {
         setup() {
