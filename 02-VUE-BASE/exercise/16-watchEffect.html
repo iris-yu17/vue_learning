@@ -1,31 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>watchEffect</title>
-  </head>
-  <body>
-    <div id="app"></div>
 
-    <script src="./js/vue.js"></script>
-    <script>
-      const { ref, reactive } = Vue;
-      const App = {
-        setup() {
-          const num = ref(0);
-          const numData = reactive({ idx: 0 });
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watchEffect</title>
+</head>
 
-          setTimeout(() => {
-            num.value++;
-            numData.idx++;
-          }, 1000);
+<body>
+  <div id="app"></div>
 
-          return {};
-        },
-      };
+  <script src="./js/vue.js"></script>
+  <script>
+    const { ref, reactive, watchEffect } = Vue;
+    const App = {
+      setup() {
+        const num = ref(0);
+        const numData = reactive({ idx: 0 });
 
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+        // 1. wathcEffect初始化時就會執行一次
+        // 2. 值改變時會再執行一次, 若值沒變就不執行
+        // watchEffect(() => {
+        //   console.log("num", num.value)
+        //   console.log("numData", numData.idx)
+        // })
+
+        // 3. wathcEffect可被停止(之後資料改變時watchEffect都不要被執行) 
+        const stop = watchEffect(() => {
+          console.log("num", num.value)
+          if (num.value > 4) {
+            stop()
+          }
+        })
+      
+
+        setInterval(() => {
+          num.value++;
+          numData.idx++;
+        }, 1000);
+
+        return {};
+      },
+    };
+
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
 </html>

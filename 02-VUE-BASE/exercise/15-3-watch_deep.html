@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>watch deep</title>
-  </head>
-  <body>
-    <div id="app"></div>
 
-    <script src="./js/vue.js"></script>
-    <script>
-      const { ref, reactive, watch } = Vue;
-      const App = {
-        setup() {
-          const data = ref({ user: {} });
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>watch deep</title>
+</head>
 
-          watch(data, (newVal) => {
-            console.log(newVal);
-          });
+<body>
+  <div id="app"></div>
 
-          setTimeout(() => {}, 1000);
+  <script src="./js/vue.js"></script>
+  <script>
+    const { ref, reactive, watch } = Vue;
+    const App = {
+      setup() {
+        const data = ref({ user: {} });
 
-          return {};
-        },
-      };
+        // watch有第三個參數, deep可做深層監控
+        watch(data, (newVal) => {
+          console.log(newVal);
+        }, { deep: true });
 
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+        // deep會針對物件每個key去做掃瞄, 會耗能, 建議針對user去做監控
+        // 除非要做大範圍掃描才用{ deep: true }
+        watch(data.value.user, (newVal) => {
+          console.log(newVal);
+        });
+
+        setTimeout(() => {
+          data.value.user["name"] = "ben"
+        }, 1000);
+
+        return {};
+      },
+    };
+
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
 </html>

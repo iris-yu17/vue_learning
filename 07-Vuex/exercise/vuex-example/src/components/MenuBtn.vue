@@ -1,10 +1,15 @@
 <script>
+// 在store/index.js定義了state, 使用useStore方法來取得state
+import { useStore } from "vuex";
+
 export default {
   setup() {
+    const store = useStore();
+
     const handClickMenu = () => {};
 
     return { handClickMenu };
-  },
+  }
 };
 </script>
 <template>

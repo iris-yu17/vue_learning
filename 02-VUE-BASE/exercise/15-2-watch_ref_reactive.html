@@ -1,29 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ref & reactive & watch</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>{{refObj}}</h1>
-      <h1>{{reactiveObj}}</h1>
-    </div>
 
-    <script src="./js/vue.js"></script>
-    <script>
-      const { ref, reactive, watch } = Vue;
-      const App = {
-        setup() {
-          const refObj = ref({ idx: 0 });
-          const reactiveObj = reactive({ idx: 0 });
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ref & reactive & watch</title>
+</head>
 
-          return { refObj, reactiveObj };
-        },
-      };
+<body>
+  <div id="app">
+    <h1>{{refObj}}</h1>
+    <h1>{{reactiveObj}}</h1>
+  </div>
 
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+  <script src="./js/vue.js"></script>
+  <script>
+    // reactive能做深層監控
+    // ref只有做淺層監控
+    const { ref, reactive, watch } = Vue;
+    const App = {
+      setup() {
+        const refObj = ref({ idx: 0 });
+        const reactiveObj = reactive({ idx: 0 });
+
+        // ----- ref -----
+        // case1:
+        // console沒有東西, ref沒被監控到
+        watch(refObj, (newValue) => {
+          console.log("refObj", newValue)
+        })
+        // case2:
+        // 沒辦法監控整個物件, 但可以監控key
+        watch(
+          () => refObj.value.idx,
+          (newValue) => {
+            console.log("refObj", newValue)
+          })
+
+        // ----- reactive -----
+        watch(reactiveObj, (newValue) => {
+          console.log("reactiveObj", newValue)
+        })
+
+
+        setTimeout(() => {
+          refObj.value.idx++
+          reactiveObj.idx++
+        }, 1000);
+
+        return { refObj, reactiveObj };
+      },
+    };
+
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
 </html>

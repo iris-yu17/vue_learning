@@ -4,6 +4,7 @@ import ListItem from "@/components/ListItem.vue";
 import TimerBox from "@/components/TimerBox.vue";
 import EventBack from "@/components/EventBack.vue";
 import TemplateRefs from "@/components/TemplateRefs.vue";
+import EmitTest from "@/components/EmitTest.vue";
 
 import { ref } from "vue";
 export default {
@@ -13,6 +14,7 @@ export default {
     TimerBox,
     EventBack,
     TemplateRefs,
+    EmitTest,
   },
   setup() {
     // const isAmin = ref(false);
@@ -41,22 +43,26 @@ export default {
 </script>
 
 <template>
-  <!-- 
+  <div>
     <TitleBar :HandListShow="HandListShow" />
+
     <ListItem :isOpen="isOpen" />
-    <TimerBox @TimeOut="handTimeOut" /> 
-  -->
 
-  <!-- <EventBack /> -->
+    <TimerBox @TimeOut="handTimeOut" />
 
-  <TemplateRefs />
+    <EventBack />
 
-  <!-- 
+    <TemplateRefs />
+
+    <!-- emit -->
+    <!-- 接收到Callback事件後, 執行handCallBackFn -->
+    <EmitTest @Callback="handCallBackFn" />
+
     <button>click</button>
     <transition name="fade">
       <div id="box"></div>
-    </transition> 
-  -->
+    </transition>
+  </div>
 </template>
 
 <style>

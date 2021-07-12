@@ -1,23 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Watch</title>
-  </head>
-  <body>
-    <div id="app"></div>
 
-    <script src="./js/vue.js"></script>
-    <script>
-      const { ref, reactive } = Vue;
-      const App = {
-        setup() {
-          return {};
-        },
-      };
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watch</title>
+</head>
 
-      Vue.createApp(App).mount("#app");
-    </script>
-  </body>
+<body>
+  <!-- 透過watch來監控資料改變 -->
+  <div id="app"></div>
+
+  <script src="./js/vue.js"></script>
+  <script>
+    const { ref, reactive, watch, readonly } = Vue;
+    const App = {
+      setup() {
+        const index = ref(0)
+        const data = reactive({ index: 0 })
+        const copyData = readonly(data)
+
+        // watch函式可傳入兩個參數
+        // (1) 監控的值
+        // (2) 值改變時所觸發的cb function(函式會回傳兩個東西:1.更改前的值 2.更改後的值)
+
+
+        // ----- 監控ref資料 -----
+        // watch(index, (newIndex, oldIndex) => {
+        // console.log("newIndex", newIndex, "oldIndex", oldIndex)
+        // })
+
+        // ----- 監控reactive資料 -----
+        // case1: reactive值有改變, 但監控到的newIndex和oldIndex值一樣, 因為要針對裡面的key去做監控
+        // watch(data, (newIndex, oldIndex) => {
+        // console.log("newIndex", newIndex, "oldIndex", oldIndex)
+        // })
+
+        // case2: 會有warning, "A watch source can only be a getter/effect function"
+        // 表示watch監控的值要是個只能被讀取的值
+        // watch(data.index, (newIndex, oldIndex) => {
+        // console.log("newIndex", newIndex, "oldIndex", oldIndex)
+        // })
+
+        // case3: 透過一個函式去return reactive的key
+        watch(
+          () => data.index, (newIndex, oldIndex) => {
+            console.log("newIndex", newIndex, "oldIndex", oldIndex)
+          })
+
+        setInterval(() => {
+          index.value++
+          data.index++
+        }, 1000);
+
+
+
+
+
+
+
+        return {};
+      },
+    };
+
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
 </html>
