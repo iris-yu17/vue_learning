@@ -54,7 +54,7 @@ export default {
 
     <TemplateRefs />
 
-    <!-- emit -->
+    <!-- emit  -->
     <!-- 接收到Callback事件後, 執行handCallBackFn -->
     <EmitTest @Callback="handCallBackFn" />
 
